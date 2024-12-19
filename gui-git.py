@@ -12,7 +12,7 @@ from git import Repo
 class ProgramManager(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Program Manager")
+        self.setWindowTitle("Git Helper")
         self.setGeometry(100, 100, 800, 600)
         self.setWindowIcon(QIcon("icon.png"))
 
