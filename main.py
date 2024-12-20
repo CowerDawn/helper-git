@@ -9,7 +9,7 @@ from PyQt5.QtCore import Qt
 from git import Repo
 
 
-class ProgramManager(QMainWindow):
+class GitHelper(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Git Helper")
@@ -22,7 +22,7 @@ class ProgramManager(QMainWindow):
         self.layout = QVBoxLayout(self.central_widget)
 
         self.header_layout = QHBoxLayout()
-        self.header_label = QLabel("Program Manager")
+        self.header_label = QLabel("Git Helper")
         self.header_label.setFont(QFont("Arial", 20))
         self.header_layout.addWidget(self.header_label)
 
@@ -135,8 +135,8 @@ class ProgramManager(QMainWindow):
         repo_name = repo_data["full_name"].split("/")[-1]
         repo_url = repo_data["clone_url"]
 
-        programs_dir = os.path.expanduser("~/programs")
-        repo_path = os.path.join(programs_dir, repo_name)
+        home_dir = os.path.expanduser("~")
+        repo_path = os.path.join(home_dir, repo_name)
 
         if os.path.exists(repo_path):
             QMessageBox.warning(self, "Error", f"Repository '{repo_name}' is already installed.")
@@ -144,7 +144,7 @@ class ProgramManager(QMainWindow):
 
         try:
             Repo.clone_from(repo_url, repo_path)
-            QMessageBox.information(self, "Success", f"Repository '{repo_name}' has been downloaded.")
+            QMessageBox.information(self, "Success", f"Repository '{repo_name}' has been downloaded to {repo_path}.")
             self.load_programs()
         except Exception as e:
             QMessageBox.critical(self, "Error", f"Failed to download repository: {e}")
@@ -177,6 +177,6 @@ class ProgramManager(QMainWindow):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    window = ProgramManager()
+    window = GitHelper()
     window.show()
     sys.exit(app.exec_())
